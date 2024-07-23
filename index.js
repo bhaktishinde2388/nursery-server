@@ -172,7 +172,7 @@ const  {id} = req.params
     if(index==-1){
        return res.json({
             success : false,
-            message : `plant not found with id ${id} `
+            message : `plant not found with id ${id}`
             
         })
     }
@@ -187,9 +187,16 @@ const  {id} = req.params
 }
 )
 
+
+app.use("*",(req,res)=>{
+    res.send(`<div>
+        <h1 style=text-align: center;"404 not found</h1>
+        </div>`)
+})
+
 const PORT = process.env.PORT
 
 app.listen(PORT,()=>{
-    console.log(`hiii ${PORT}`)
+    console.log(`servery is run on ${PORT}`)
     
 })
