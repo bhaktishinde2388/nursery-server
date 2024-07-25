@@ -1,34 +1,9 @@
-import Plant from "../models/Plant"
+import Plant from "../models/Plant.js"
 
 
-const plants = [
-    {
-        "id": 1,
-        "name": "bambu",
-        "img": "https://m.media-amazon.com/images/I/61hC8AAD1AL._SL1000_.jpg",
-        "price": 40,
-        "category": "indoor",
-        "description": "Ugaoo Lucky Bamboo 3 Layer Feng Shui Plant"
-    },
-    {
-        "id": 3,
-        "name": "rose",
-        "img": "https://m.media-amazon.com/images/I/61hC8AAD1AL._SL1000_.jpg",
-        "price": 40,
-        "category": "indoor",
-        "description": "Ugaoo Lucky Bamboo 3 Layer Feng Shui Plant"
-    },
-    {
-        "id":7,
-        "name": "mango",
-        "img": "https://m.media-amazon.com/images/I/61hC8AAD1AL._SL1000_.jpg",
-        "price": 40,
-        "category": "indoor",
-        "description": "Ugaoo Lucky Bamboo 3 Layer Feng Shui Plant"
-    }
-]
+const plants = []
 
-const postPlant = (req,res)=>{
+const postPlant = async (req,res)=>{
     const {name,
         category,
         img,
@@ -36,47 +11,59 @@ const postPlant = (req,res)=>{
         description
     } = req.body
 
-    if(!name){
-        res.json({
-            success:false,
-            data:null,
-            message:"pla add name"
-        })
-    }
-    if(!img){
-        res.json({
-            success:false,
-            data:null,
-            message:"plz add img"
-        })
-    }
+    const newPlant = new Plant({
+            name:name,
+            img:img,
+            price:price,
+            category:category,
+            description:description
+    })
 
-    const randomId = Math.round(Math.random() * 10000)
 
-    const newPlant = {
-        id: randomId,
-        name:name,
-        img:img,
-        price:price,
-        category:category,
-        description:description
-    }
+    const savedPlant = await newPlant.save();
+    // if(!name){
+    //     res.json({
+    //         success:false,
+    //         data:null,
+    //         message:"pla add name"
+    //     })
+    // }
+    // if(!img){
+    //     res.json({
+    //         success:false,
+    //         data:null,
+    //         message:"plz add img"
+    //     })
+    // }
 
-    plants.push(newPlant)
+    // const randomId = Math.round(Math.random() * 10000)
+
+    // const newPlant = {
+    //     id: randomId,
+    //     name:name,
+    //     img:img,
+    //     price:price,
+    //     category:category,
+    //     description:description
+    // }
+
+    // plants.push(newPlant)
 
     res.json({
         success:true,
-        data:newPlant,
+        data:savedPlant,
         message:"new palnt added successfully"
     })
 }
 
-const getPlants = (req,res)=>
+const getPlants = async (req,res)=>
     {
+      const allPlants = await Plant.find()
+
         res.json({
             success:true,
-            data:plants,
-            message:"all olants fetch successfully"
+            data:allPlants,
+            message:"all plants fetch successfully"
         })
     }
 
