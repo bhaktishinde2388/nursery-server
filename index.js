@@ -2,10 +2,12 @@ import express, { json } from "express";
 import dotenv from "dotenv"
 dotenv.config()
 
+import {getHealth} from "./controllers/health.js"
+
 const app = express()
 app.use(express.json())
 
-//temp. db
+//temp. db / resourse
 const plants = [
     {
         "id": 1,
@@ -32,6 +34,9 @@ const plants = [
         "description": "Ugaoo Lucky Bamboo 3 Layer Feng Shui Plant"
     }
 ]
+
+
+app.get("/health",getHealth)
 
 // add resourse
 app.post("/plant",(req,res)=>{
@@ -188,7 +193,7 @@ const  {id} = req.params
 )
 
 
-app.use("*",(req,res)=>{
+app.use("*", (req,res)=>{
     res.send(`<div>
         <h1 style=text-align: center;"404 not found</h1>
         </div>`)
