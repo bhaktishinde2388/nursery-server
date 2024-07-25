@@ -1,3 +1,6 @@
+import Plant from "../models/Plant"
+
+
 const plants = [
     {
         "id": 1,
