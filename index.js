@@ -2,6 +2,7 @@ import express, { json } from "express";
 import dotenv from "dotenv"
 dotenv.config()
 import mongoose from "mongoose";
+import cors from "cors"
 
 import {getHealth} from "./controllers/health.js"
 import { postPlant } from "./controllers/plant.js";
@@ -11,6 +12,8 @@ import { pageNotFound } from "./controllers/error.js";
 
 
 const app = express()
+//default policy//allowed all requests//cors sathi
+app.use(cors())
 app.use(express.json())
 
 const dbConnection = async ()=>{
