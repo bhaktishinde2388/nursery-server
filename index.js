@@ -5,6 +5,7 @@ dotenv.config()
 import {getHealth} from "./controllers/health.js"
 import { postPlant } from "./controllers/plant.js";
 import { getPlants , getPlantId ,putPlantId ,deletePlantId} from "./controllers/plant.js";
+import { pageNotFound } from "./controllers/error.js";
 
 
 const app = express()
@@ -53,11 +54,7 @@ app.delete("/plant/:id",deletePlantId)
 
 
 
-app.use("*", (req,res)=>{
-    res.send(`<div>
-        <h1 style="text-align: center;"404 not found</h1>
-        </div>`)
-})
+app.use("*", pageNotFound)
 
 const PORT = process.env.PORT
 
