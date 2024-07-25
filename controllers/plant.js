@@ -80,7 +80,8 @@ const getPlantId = async (req,res)=>{
     })
 }
 
-const putPlantId = (req,res)=>
+//update
+const putPlantId = async (req,res)=>
     {
     const {
         name,
@@ -92,42 +93,24 @@ const putPlantId = (req,res)=>
     
         const {id} = req.params
     
-        let index = -1
-    
-        plants.forEach((plant, i)=>{
-            if(plant.id == id){
-                index= i
-            }
-        })
-    
-    
-    const newObj = {
-        id ,
-        name,
-        category,
-        img,
-        price,
-        description
-    }
-    
-    if(index == -1){
-       return res.json({
-            success:false,
-            data:null,
-            message: `plant not found for this id ${id}`
-        })
-    }
-    
-    else{
-        plants[index] = newObj
-    
-        return res.json({
-            success:true,
-            data:newObj,
-            message: `plant update successfully` 
-        })
-    }
-    
+await Plant.updateOne({_id:id},
+    {
+        $set: {
+            name:name,
+            img:img,
+            price:price,
+            category:category,
+            description:description
+}})
+
+const updatedPlant = await Plant.findById(id)
+
+res.json({
+    success:true,
+    message:"plant updated successfully",
+    data:updatedPlant
+})
+
     }
 
 const deletePlantId =  (req,res) =>{
